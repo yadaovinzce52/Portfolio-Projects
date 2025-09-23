@@ -1,5 +1,7 @@
 class MorseToText:
-    def __init__(self):
+    def __init__(self, message):
+        self.message = message
+        self.translated_morse = []
         # Dictionary to translate morse code to characters
         self.morse_char = {
             '.-' : 'A',
@@ -40,5 +42,21 @@ class MorseToText:
             '----.' : '9',
         }
 
-    def is_valid(self, message):
-        pass
+    def is_valid(self):
+        return all(char == '.' or char == '-' or char == '/' or char.isspace() for char in self.message)
+
+    def translate_morse(self):
+        message = self.message.split('/')
+        for word in message:
+            characters = word.split(' ')
+            for char in characters:
+                try:
+                    self.translated_morse.append(self.morse_char[char])
+                except KeyError:
+                    self.translated_morse.append('~')
+            self.translated_morse.append(' ')
+
+    def display_text(self):
+        return ''.join(self.translated_morse)
+
+
